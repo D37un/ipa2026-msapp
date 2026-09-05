@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>Router Detail - {{ ip }}</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <h1>Interface Status: {{ ip }}</h1>
+    <a href="{{ url_for('main') }}">&larr; Back to Router List</a>
+
+    {% if history %}
+        {% for record in history %}
+            <h3>Checked at: {{ record.timestamp }}</h3>
+            <table border="1" cellpadding="5">
+                <tr>
+                    <th>Interface</th>
+                    <th>IP Address</th>
+                    <th>Status</th>
+                    <th>Protocol</th>
+                </tr>
+                {% for iface in record.interfaces %}
+                <tr>
+                    <td>{{ iface.interface }}</td>
+                    <td>{{ iface.ip_address }}</td>
+                    <td>{{ iface.status }}</td>
+                    <td>{{ iface.proto }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <br>
+        {% endfor %}
+    {% else %}
+        <p>No interface status data yet for this router.</p>
+    {% endif %}
+</body>
+</html>
